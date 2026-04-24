@@ -1,0 +1,517 @@
+﻿﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>小七导航网 · 纯净VIP视频解析播放器</title>
+    <meta name="keywords" content="小七导航,视频解析,VIP解析,在线播放,小七导航网">
+    <meta name="description" content="小七导航网 · 纯净VIP视频解析播放，支持多线路高清解析，快速稳定无广告。">
+    <link rel="shortcut icon" href="./images/favicon.ico">
+    <link rel="bookmark" href="./images/favicon.ico">
+    <link href="./static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style type="text/css">
+        * {
+            font-family: 'Inter', 'Microsoft Yahei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            cursor: url('tu/S1.cur'), auto;
+        }
+
+        a {
+            cursor: url('tu/S2.cur'), auto;
+            transition: all 0.3s ease;
+        }
+
+        /* 毛玻璃效果容器 */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 顶部导航 */
+        .topbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .topbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            max-height: 52px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.02);
+        }
+
+        .txt {
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #085D9B 0%, #3A96DB 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .topbar ul li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #085D9B 0%, #3A96DB 100%);
+            color: white;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .topbar ul li a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(58, 150, 219, 0.3);
+            text-decoration: none;
+            color: white;
+        }
+
+        /* 播放器区域 */
+        .player-wrapper {
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-wrapper iframe {
+            display: block;
+            width: 100%;
+            min-height: 500px;
+            border: none;
+        }
+
+        /* 表单区域美化 */
+        .form-control-custom {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            padding: 12px 16px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-custom:focus {
+            border-color: #3A96DB;
+            box-shadow: 0 0 0 4px rgba(58, 150, 219, 0.1);
+            outline: none;
+        }
+
+        select.form-control-custom {
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .btn-play {
+            background: linear-gradient(135deg, #FE8B1F 0%, #FF6B00 100%);
+            border: none;
+            border-radius: 16px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(254, 139, 31, 0.3);
+        }
+
+        .btn-play:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(254, 139, 31, 0.4);
+            background: linear-gradient(135deg, #FF6B00 0%, #FE8B1F 100%);
+        }
+
+        /* 提示卡片 */
+        .info-card {
+            background: linear-gradient(135deg, rgba(233, 247, 239, 0.95), rgba(212, 237, 218, 0.95));
+            border-radius: 20px;
+            padding: 16px 24px;
+            text-align: center;
+            color: #2d6a4f;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 合作品牌区 */
+        .logos_lists {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .logos_lists dl {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 12px 20px;
+            margin: 0;
+            border-radius: 60px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logos_lists dl:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .logos_lists dt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logos_lists dt img {
+            max-height: 30px;
+            width: auto;
+        }
+
+        .logos_lists dd {
+            display: none;
+        }
+
+        /* 版权区域 */
+        .copyright {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            margin-top: 50px;
+            padding: 30px 0 25px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .copyright a {
+            color: #085D9B;
+            font-weight: 600;
+        }
+
+        .copyright a:hover {
+            color: #FE8B1F;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .topbar .container {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .txt {
+                font-size: 14px;
+                order: 2;
+                flex: 1;
+                text-align: center;
+            }
+            .logo {
+                order: 1;
+            }
+            .topbar ul {
+                order: 3;
+                width: 100%;
+                text-align: center;
+            }
+            .topbar ul li a {
+                display: inline-flex;
+                padding: 8px 20px;
+            }
+            .player-wrapper iframe {
+                min-height: 280px;
+            }
+            .logos_lists dl {
+                padding: 8px 14px;
+            }
+            .logos_lists dt img {
+                max-height: 24px;
+            }
+            .form-group-mobile {
+                margin-bottom: 12px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 992px) {
+            .player-wrapper iframe {
+                min-height: 420px;
+            }
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* 接口选项高亮 */
+        .highlight-option {
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
+    <script src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        // 解析播放核心函数
+        function dihejk() {
+            var selectElem = document.getElementById("jk");
+            var urlInput = document.getElementById("url");
+            var iframePlayer = document.getElementById("player");
+            
+            var apiUrl = selectElem.options[selectElem.selectedIndex].value;
+            var videoUrl = urlInput.value.trim();
+            
+            if (!videoUrl) {
+                alert("请粘贴或输入需要解析的视频网址 (如: https://v.qq.com/xxx 或 bilibili链接)");
+                return false;
+            }
+            
+            if (!videoUrl.match(/^https?:\/\//i)) {
+                videoUrl = "https://" + videoUrl;
+            }
+            
+            var finalUrl = apiUrl + encodeURIComponent(videoUrl);
+            iframePlayer.src = finalUrl;
+            iframePlayer.scrollIntoView({ behavior: "smooth", block: "start" });
+            return true;
+        }
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var autoUrl = urlParams.get('url');
+            if (autoUrl) {
+                var inputBox = document.getElementById("url");
+                if (inputBox) {
+                    inputBox.value = decodeURIComponent(autoUrl);
+                    setTimeout(function() {
+                        dihejk();
+                    }, 200);
+                }
+            }
+        });
+        
+        if (typeof dihejk !== 'function') {
+            window.dihejk = function() {
+                alert("播放器初始化完成，请重试");
+            };
+        }
+    </script>
+</head>
+<body>
+
+<div class="topbar">
+    <div class="container">
+        <div class="logo">
+            <a href="https://yanqi-spec.github.io/daohanglaile/" target="_self">
+                <img src="https://pic1.imgdb.cn/item/69eb245b0989a85538518132.png" alt="小七导航网">
+            </a>
+        </div>
+        <div class="txt">
+            <i class="fas fa-play-circle" style="margin-right: 8px;"></i>云播如此简单 · 小七导航网
+        </div>
+        <ul style="list-style: none; margin-bottom: 0;">
+            <li>
+                <a target="_blank" href="https://yanqi-spec.github.io/daohanglaile/">
+                    <i class="fas fa-download"></i> 下载程序
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="container" style="padding: 20px 15px;">
+    
+    <!-- 温馨提示横幅 -->
+    <div class="col-md-12 column animate-fade-in" style="margin-bottom: 20px;">
+        <div class="info-card">
+            <i class="fas fa-bolt" style="margin-right: 8px;"></i> 若播放异常，请刷新页面或更换解析线路 <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+    
+    <!-- 播放器区域 -->
+    <div class="col-md-12 column animate-fade-in" style="margin-bottom: 25px;">
+        <div class="player-wrapper">
+            <iframe src="https://jx.jsonplayer.com/player/?url=https://www.bilibili.com/bangumi/play/ep199612" 
+                    id="player" 
+                    width="100%" 
+                    height="500px" 
+                    allowtransparency="true" 
+                    frameborder="0" 
+                    scrolling="no" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+    
+    <!-- 解析表单区：仅保留4/9/10号接口 -->
+    <div class="col-md-12 column animate-fade-in">
+        <div class="glass-card" style="padding: 25px;">
+            <form method="get" onsubmit="return false;">
+                <div class="row">
+                    <div class="col-md-3 col-sm-12 form-group-mobile" style="margin-bottom: 15px;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #333;">
+                            <i class="fas fa-random"></i> 选择解析线路
+                        </label>
+                        <select class="form-control form-control-custom" id="jk">
+                            <option value="https://jx.xmflv.com/?url=" selected="selected" style="color:#d9534f; font-weight:bold;">🚀 四号解析接口 (推荐)</option>
+                            <option value="https://api.qianqi.net/vip/?url=">🌀 九号解析接口</option>
+                            <option value="https://jx.playerjy.com/?url=">🍀 十号解析接口</option>
+                        </select>
+                    </div>
+                    <div class="col-md-7 col-sm-12 form-group-mobile" style="margin-bottom: 15px;">
+                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #333;">
+                            <i class="fas fa-link"></i> 视频链接
+                        </label>
+                        <input class="form-control form-control-custom" type="search" 
+                               placeholder="粘贴视频地址 (支持腾讯/优酷/爱奇艺/B站/芒果/搜狐等)" 
+                               id="url">
+                    </div>
+                    <div class="col-md-2 col-sm-12 form-group-mobile" style="margin-bottom: 15px;">
+                        <label style="visibility: hidden; margin-bottom: 8px; display: block;">播放</label>
+                        <button type="button" class="btn-play" style="width: 100%;" onclick="dihejk()">
+                            <i class="fas fa-play"></i> 立即播放
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 提示区域 & 合作站点 -->
+    <div class="tips animate-fade-in">
+        <div class="col-md-12" style="margin-top: 20px;">
+            <div class="info-card" style="background: linear-gradient(135deg, rgba(255, 248, 225, 0.95), rgba(255, 241, 184, 0.95)); color: #856404;">
+                <i class="fas fa-shield-alt"></i> 本站视频源于互联网公开资源，仅供学习交流，VIP解析仅用于技术研究。请支持正版！
+            </div>
+        </div>
+        
+        <!-- 视频平台logo区 -->
+        <div class="logos_lists">
+            <dl><dt><a target="_blank" href="http://www.le.com/"><img src="./static/picture/letvlogo.png" alt="乐视"></a></dt><dd>乐视TV</dd></dl>
+            <dl><dt><a target="_blank" href="http://v.qq.com/"><img src="./static/picture/qqlogo.png" alt="腾讯视频"></a></dt><dd>腾讯视频</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.iqiyi.com/"><img src="./static/picture/iqiyi.png" alt="爱奇艺"></a></dt><dd>爱奇艺</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.youku.com/"><img src="./static/picture/youkulogo.png" alt="优酷"></a></dt><dd>优酷视频</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.tudou.com/"><img src="./static/picture/tudoulogo.png" alt="土豆"></a></dt><dd>土豆视频</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.mgtv.com/"><img src="./static/picture/hunantvlogo.png" alt="芒果TV"></a></dt><dd>芒果TV</dd></dl>
+            <dl><dt><a target="_blank" href="http://tv.sohu.com/"><img src="./static/picture/sohulogo.png" alt="搜狐"></a></dt><dd>搜狐视频</dd></dl>
+            <dl><dt><a target="_blank" href="http://cloud.youku.com/"><img src="./static/picture/ykcloud.png" alt="优酷云"></a></dt><dd>优酷云C</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.acfun.tv/"><img src="./static/picture/acfun.png" alt="AcFun"></a></dt><dd>Ac弹幕网</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.bilibili.com/"><img src="./static/picture/bilibili.png" alt="Bilibili"></a></dt><dd>哔哩哔哩</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.fun.tv/"><img src="./static/picture/fengxing.gif" alt="风行"></a></dt><dd>风行网</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.wasu.cn/"><img src="./static/picture/wasulogo.png" alt="华数"></a></dt><dd>WASU华数</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.56.com/"><img src="./static/picture/56logo.png" alt="56网"></a></dt><dd>56</dd></dl>
+            <dl><dt><a target="_blank" href="http://www.yinyuetai.com/"><img src="./static/picture/yinyuetailogo.png" alt="音悦台"></a></dt><dd>音悦台MV</dd></dl>
+        </div>
+    </div>
+</div>
+
+<!-- 版权footer -->
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                Copyright &copy; 2013-2026 
+                <a href="https://yanqi-spec.github.io/daohanglaile/" target="_blank">小七导航网</a> 
+                All Rights Reserved
+                <br><br>
+                <span style="font-size: 12px; opacity: 0.7;">
+                    <i class="fas fa-compass"></i> 小七导航 · 纯净上网 ｜ 本站仅提供技术解析，内容来自网络，如有侵权请告知。
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function(){
+        window.dihejk = window.dihejk || function(){
+            var selectElem = document.getElementById("jk");
+            var urlInput = document.getElementById("url");
+            var iframePlayer = document.getElementById("player");
+            if(!selectElem || !urlInput || !iframePlayer) return;
+            var apiUrl = selectElem.options[selectElem.selectedIndex].value;
+            var videoUrl = urlInput.value.trim();
+            if(!videoUrl) { alert("请输入需要解析的视频链接～"); return; }
+            if (!videoUrl.match(/^https?:\/\//i)) videoUrl = "https://" + videoUrl;
+            var finalPlayUrl = apiUrl + encodeURIComponent(videoUrl);
+            iframePlayer.src = finalPlayUrl;
+        };
+        
+        var btn = document.querySelector("button[onclick='dihejk()']");
+        if(btn) {
+            btn.onclick = function(e) {
+                e.preventDefault();
+                window.dihejk();
+            };
+        }
+        
+        var urlField = document.getElementById("url");
+        if(urlField) {
+            urlField.addEventListener("keypress", function(e) {
+                if(e.key === "Enter") {
+                    e.preventDefault();
+                    window.dihejk();
+                }
+            });
+        }
+    })();
+</script>
+</body>
+</html>
