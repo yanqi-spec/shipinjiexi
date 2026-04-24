@@ -28,6 +28,13 @@
             transition: all 0.3s ease;
         }
 
+        /* 主容器 - 居中布局 */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         /* 毛玻璃效果容器 */
         .glass {
             background: rgba(255, 255, 255, 0.95);
@@ -66,6 +73,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 12px 15px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .logo a {
@@ -112,12 +121,14 @@
             color: white;
         }
 
-        /* 播放器区域 */
+        /* 播放器区域 - 居中 */
         .player-wrapper {
             background: #000;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .player-wrapper iframe {
@@ -127,7 +138,13 @@
             border: none;
         }
 
-        /* 表单区域美化 */
+        /* 表单区域 - 居中 */
+        .form-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+
         .form-control-custom {
             background: #f8f9fa;
             border: 2px solid #e9ecef;
@@ -135,6 +152,7 @@
             padding: 12px 16px;
             font-size: 15px;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .form-control-custom:focus {
@@ -161,12 +179,21 @@
             color: white;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(254, 139, 31, 0.3);
+            width: 100%;
         }
 
         .btn-play:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(254, 139, 31, 0.4);
             background: linear-gradient(135deg, #FF6B00 0%, #FE8B1F 100%);
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #333;
+            font-size: 14px;
         }
 
         /* 提示卡片 */
@@ -178,6 +205,8 @@
             color: #2d6a4f;
             font-weight: 500;
             backdrop-filter: blur(5px);
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
         }
 
         /* 合作品牌区 */
@@ -240,8 +269,51 @@
             color: #FE8B1F;
         }
 
-        /* 响应式 */
+        /* 响应式布局 - 自适应屏幕 */
+        @media (min-width: 992px) {
+            .form-row {
+                display: flex;
+                align-items: flex-end;
+                gap: 20px;
+            }
+            .form-col-select {
+                flex: 0 0 280px;
+            }
+            .form-col-url {
+                flex: 1;
+            }
+            .form-col-btn {
+                flex: 0 0 120px;
+            }
+            .form-label {
+                margin-bottom: 8px;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .form-row {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            .form-col-select, .form-col-url, .form-col-btn {
+                width: 100%;
+            }
+            .btn-play {
+                width: 100%;
+            }
+            .form-label {
+                margin-bottom: 8px;
+            }
+            .player-wrapper iframe {
+                min-height: 350px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .main-wrapper {
+                padding: 12px;
+            }
             .topbar .container {
                 flex-wrap: wrap;
                 gap: 10px;
@@ -265,22 +337,26 @@
                 padding: 8px 20px;
             }
             .player-wrapper iframe {
-                min-height: 280px;
+                min-height: 250px;
             }
             .logos_lists dl {
                 padding: 8px 14px;
             }
             .logos_lists dt img {
-                max-height: 24px;
+                max-height: 22px;
             }
-            .form-group-mobile {
-                margin-bottom: 12px;
+            .form-container {
+                padding: 20px;
+            }
+            .info-card {
+                font-size: 13px;
+                padding: 12px 16px;
             }
         }
 
         @media (min-width: 768px) and (max-width: 992px) {
             .player-wrapper iframe {
-                min-height: 420px;
+                min-height: 400px;
             }
         }
 
@@ -304,6 +380,11 @@
         .highlight-option {
             color: #d9534f;
             font-weight: bold;
+        }
+
+        /* 隐藏bootstrap默认边框 */
+        .container {
+            max-width: 1400px;
         }
     </style>
     <script src="./static/js/jquery.min.js"></script>
@@ -376,17 +457,17 @@
     </div>
 </div>
 
-<div class="container" style="padding: 20px 15px;">
+<div class="main-wrapper">
     
     <!-- 温馨提示横幅 -->
-    <div class="col-md-12 column animate-fade-in" style="margin-bottom: 20px;">
+    <div class="animate-fade-in">
         <div class="info-card">
             <i class="fas fa-bolt" style="margin-right: 8px;"></i> 若播放异常，请刷新页面或更换解析线路 <i class="fas fa-arrow-right"></i>
         </div>
     </div>
     
     <!-- 播放器区域 -->
-    <div class="col-md-12 column animate-fade-in" style="margin-bottom: 25px;">
+    <div class="animate-fade-in" style="margin-bottom: 25px;">
         <div class="player-wrapper">
             <iframe src="https://jx.jsonplayer.com/player/?url=https://www.bilibili.com/bangumi/play/ep199612" 
                     id="player" 
@@ -400,13 +481,13 @@
         </div>
     </div>
     
-    <!-- 解析表单区：仅保留4/9/10号接口 -->
-    <div class="col-md-12 column animate-fade-in">
-        <div class="glass-card" style="padding: 25px;">
+    <!-- 解析表单区：仅保留4/9/10号接口 - 居中布局 -->
+    <div class="animate-fade-in">
+        <div class="glass-card form-container">
             <form method="get" onsubmit="return false;">
-                <div class="row">
-                    <div class="col-md-3 col-sm-12 form-group-mobile" style="margin-bottom: 15px;">
-                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #333;">
+                <div class="form-row">
+                    <div class="form-col-select">
+                        <label class="form-label">
                             <i class="fas fa-random"></i> 选择解析线路
                         </label>
                         <select class="form-control form-control-custom" id="jk">
@@ -415,18 +496,18 @@
                             <option value="https://jx.playerjy.com/?url=">🍀 十号解析接口</option>
                         </select>
                     </div>
-                    <div class="col-md-7 col-sm-12 form-group-mobile" style="margin-bottom: 15px;">
-                        <label style="font-weight: 600; margin-bottom: 8px; display: block; color: #333;">
+                    <div class="form-col-url">
+                        <label class="form-label">
                             <i class="fas fa-link"></i> 视频链接
                         </label>
                         <input class="form-control form-control-custom" type="search" 
                                placeholder="粘贴视频地址 (支持腾讯/优酷/爱奇艺/B站/芒果/搜狐等)" 
                                id="url">
                     </div>
-                    <div class="col-md-2 col-sm-12 form-group-mobile" style="margin-bottom: 15px;">
-                        <label style="visibility: hidden; margin-bottom: 8px; display: block;">播放</label>
-                        <button type="button" class="btn-play" style="width: 100%;" onclick="dihejk()">
-                            <i class="fas fa-play"></i> 立即播放
+                    <div class="form-col-btn">
+                        <label class="form-label" style="visibility: hidden;">播放</label>
+                        <button type="button" class="btn-play" onclick="dihejk()">
+                            <i class="fas fa-play"></i> 播放
                         </button>
                     </div>
                 </div>
@@ -436,10 +517,8 @@
     
     <!-- 提示区域 & 合作站点 -->
     <div class="tips animate-fade-in">
-        <div class="col-md-12" style="margin-top: 20px;">
-            <div class="info-card" style="background: linear-gradient(135deg, rgba(255, 248, 225, 0.95), rgba(255, 241, 184, 0.95)); color: #856404;">
-                <i class="fas fa-shield-alt"></i> 本站视频源于互联网公开资源，仅供学习交流，VIP解析仅用于技术研究。请支持正版！
-            </div>
+        <div class="info-card" style="background: linear-gradient(135deg, rgba(255, 248, 225, 0.95), rgba(255, 241, 184, 0.95)); color: #856404; margin-top: 20px;">
+            <i class="fas fa-shield-alt"></i> 本站视频源于互联网公开资源，仅供学习交流，VIP解析仅用于技术研究。请支持正版！
         </div>
         
         <!-- 视频平台logo区 -->
